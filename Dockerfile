@@ -2,7 +2,7 @@ FROM python:3.8-alpine
 
 ARG kubectl_version=v1.11.5
 
-RUN apk --no-cache add ca-certificates curl
+RUN apk --no-cache add bash ca-certificates curl
 
 # install kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$kubectl_version/bin/linux/amd64/kubectl && \
@@ -14,6 +14,10 @@ RUN curl -LO https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin
     chmod +x ./aws-iam-authenticator && \
     mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
 
+# install aws cli
+RUN pip3 install --upgrade awscli
+
+# create user
 RUN mkdir -p /kubectl && \
     chmod -R 777 /kubectl
 
@@ -23,8 +27,4 @@ RUN addgroup -S kubectl && \
 USER kubectl
 WORKDIR /kubectl
 
-# install AWS CLI
-RUN pip3 install --upgrade --user awscli
-
-RUN kubectl version
-RUN aws --version
+CMD [ "kubectl" ]
