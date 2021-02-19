@@ -17,6 +17,9 @@ RUN curl -LO https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin
 # install aws cli
 RUN pip3 install --upgrade awscli
 
+# kustomize
+ADD ./kustomize /usr/local/bin/kustomize
+
 # create user
 RUN mkdir -p /kubectl && \
     chmod -R 777 /kubectl
