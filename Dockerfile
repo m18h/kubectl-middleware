@@ -2,7 +2,7 @@ FROM python:3.8-alpine
 
 ARG kubectl_version=v1.11.5
 
-RUN apk --no-cache add bash ca-certificates curl
+RUN apk --no-cache add bash ca-certificates curl git
 
 # install kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$kubectl_version/bin/linux/amd64/kubectl && \
